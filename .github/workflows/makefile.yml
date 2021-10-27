@@ -8,8 +8,6 @@ on:
   pull_request:
     branches: [ main ]
     paths: 'firmware/**'
-  # Allows you to run this workflow manually from the Actions tab
-  workflow-dispatch:
 
 defaults:
   working-directory: firmware
@@ -23,8 +21,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: arm-none-eabi-gcc
     - uses: fiam/arm-none-eabi-gcc@v1
       with: 
         release: '9-2019-q4' # The arm-none-eabi-gcc release to use.

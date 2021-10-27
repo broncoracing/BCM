@@ -6,11 +6,15 @@ on:
   pull_request:
     branches: [ main ]
 
+defaults:
+  working-directory: firmware
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    working-directory: firmware
+    env:
+      WORKING_DIR: firmware
 
     steps:
     - uses: actions/checkout@v2
@@ -20,10 +24,10 @@ jobs:
       with: 
         release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
     
-    - name: configure
-      run: ./configure
+    # - name: configure
+    #   run: ./configure
       
-    - name: Install dependencies
+    - name: Run build
       run: make
       
     - name: Run check

@@ -23,11 +23,3 @@ jobs:
     - name: Run build
       run: make
       working-directory: firmware
-      
-    - name: Run check
-      run: make check
-      working-directory: firmware
-
-    - name: Run distcheck
-      run: make distcheck
-      working-directory: firmware

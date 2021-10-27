@@ -9,9 +9,6 @@ on:
     branches: [ main ]
     paths: 'firmware/**'
 
-defaults:
-  working-directory: firmware
-
 jobs:
   build:
 
@@ -25,14 +22,17 @@ jobs:
       with: 
         release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
     
-    # - name: configure
-    #   run: ./configure
+    - name: configure
+      run: ./configure
       
     - name: Run build
       run: make
+      working-directory: $WORKING_DIR
       
     - name: Run check
       run: make check
-      
+      working-directory: $WORKING_DIR
+
     - name: Run distcheck
       run: make distcheck
+      working-directory: $WORKING_DIR

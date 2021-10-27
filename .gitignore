@@ -12,6 +12,9 @@ __Previews
 *.htm
 *.$$$
 
+# build dir
+firmware/build/*
+
 #useless dirs
 Project\ Outputs
 Project\ Logs

@@ -1,0 +1,33 @@
+name: Build check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    working-directory: firmware
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: arm-none-eabi-gcc
+    - uses: fiam/arm-none-eabi-gcc@v1
+      with: 
+        release: '9-2019-q4' # The arm-none-eabi-gcc release to use.
+    
+    - name: configure
+      run: ./configure
+      
+    - name: Install dependencies
+      run: make
+      
+    - name: Run check
+      run: make check
+      
+    - name: Run distcheck
+      run: make distcheck

@@ -37,10 +37,10 @@ jobs:
           submodules: recursive
       -
         name: Build Application
-        run: |
+        run:
           set -e
-          mbed-tools deploy
-          mbed-tools compile -t GCC_ARM -m $build_target --profile $build_profile
+          mbed deploy
+          mbed compile -t GCC_ARM -m $build_target --profile $build_profile
       -
         name: Archive
         uses: actions/upload-artifact@v3

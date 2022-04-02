@@ -4,10 +4,18 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'firmware/**'
   workflow_dispatch:
   push:
     branches:
       - main
+    paths:
+      - 'firmware/**'
+
+defaults:
+run:
+  working-directory: firmware
 
 env:
   build_target: NUCLEO_F412ZG

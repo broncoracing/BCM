@@ -14,8 +14,8 @@ on:
       - 'firmware/**'
 
 defaults:
-run:
-  working-directory: firmware
+  run:
+    working-directory: firmware
 
 env:
   build_target: NUCLEO_F412ZG

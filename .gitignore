@@ -105,3 +105,14 @@ Desktop.ini
 
 # Jetbrains stuff
 **/.idea/
+
+# mbed stuff
+BUILD/
+mbed-os/
+cmake-build-debug/
+cmake-build/
+*/.mbed
+!mbed-os.lib
+mbed_app.json
+.env/
+.venv/

@@ -37,7 +37,7 @@ jobs:
           submodules: recursive
       -
         name: Build Application
-        run:
+        run: |
           set -e
           mbed deploy
           mbed compile -t GCC_ARM -m $build_target --profile $build_profile

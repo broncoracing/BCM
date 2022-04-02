@@ -2,67 +2,38 @@ name: Build Checks
 
 on:
   pull_request:
+    branches:
+      - main
   workflow_dispatch:
   push:
     branches:
       - main
 
+env:
+  build_target: NUCLEO_F412ZG
+  build_profile: release
+  filename: bcm-firmware.elf
+
 jobs:
-  style-check:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/armmbed/mbed-os-env:mbed-os-6-latest
-
-    steps:
-
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-    
-      - 
-        name: UTF-8 Check
-        run: |
-          # Make sure we're not introducing any text which is not UTF-8 encoded
-          git diff origin/${GITHUB_BASE_REF} -U0 | ( grep -a '^+' || true ) | ( ! grep -axv '.*' )
-          
-
-      - 
-        name: astyle checks
-        run: |
-          set -x
-          git diff --name-only --diff-filter=d origin/${GITHUB_BASE_REF} \
-            | ( grep '.*\.\(c\|cpp\|h\|hpp\)$' || true ) \
-            | ( grep -v -f .codecheckignore || true ) \
-            | while read file; do astyle -n --options=.astylerc "${file}"; done
-          git diff --exit-code --diff-filter=d --color
-
   build:
     container:
       image: ghcr.io/armmbed/mbed-os-env:mbed-os-6-latest
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        target: NUCLEO_F412ZG
-        profile: release
-        
-
     steps:
       -
         name: Checkout
         uses: actions/checkout@v2
-          
       -
         name: Build Application
         run: |
           set -e
           mbed-tools deploy
-          mbed-tools compile -t GCC_ARM -m ${{ matrix.target }} --profile ${{ matrix.profile }}
-      - 
-        name: Archive 
+          mbed-tools compile -t GCC_ARM -m $build_target --profile $build_profile
+      -
+        name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: bcm-firmware.elf
-          path: firmware/BUILD/NUCLEO_F412ZG/ARMC6/firmware.elf
+          name: $filename
+          path: firmware/BUILD/$build_target/ARMC6/firmware.elf

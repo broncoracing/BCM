@@ -11,7 +11,7 @@ jobs:
   style-check:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/armmbed/mbed-os-env:master-latest
+      image: ghcr.io/armmbed/mbed-os-env:mbed-os-6-latest
 
     steps:
 
@@ -55,8 +55,14 @@ jobs:
         uses: actions/checkout@v2
           
       -
-        name: build-application
+        name: Build Application
         run: |
           set -e
           mbed-tools deploy
           mbed-tools compile -t GCC_ARM -m ${{ matrix.target }} --profile ${{ matrix.profile }}
+      - 
+        name: Archive 
+        uses: actions/upload-artifact@v3
+        with:
+          name: bcm-firmware.elf
+          path: firmware/BUILD/NUCLEO_F412ZG/ARMC6/firmware.elf

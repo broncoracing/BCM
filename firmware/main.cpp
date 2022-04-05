@@ -29,6 +29,8 @@ Ticker dbw_loop;
 Timer ecuTimer;
 Timer canTimer;
 
+Timeout shift_reset_timeout;
+
 // init states
 BCMState bcmState;
 EngineState engineState;
@@ -44,23 +46,27 @@ void dbw_received(CANMessage msg);
 void check_state();
 void check_dbw_status();
 void set_state();
-
+void pin_reset(DigitalOut *pin);
 
 
 // Event Handlers
-void can_received_handler() {
+void can_received_handler()
+{
     queue.call(can_received);
 }
 
-void state_update_handler() {
+void state_update_handler()
+{
     queue.call(check_state);
 }
 
-void dbw_check_handler() {
+void dbw_check_handler()
+{
     queue.call(check_dbw_status);
 }
 
-int main() {
+int main()
+{
 #ifdef DEBUG_SWO
     // Print debug info over SWO
     swo.claim();
@@ -90,13 +96,14 @@ int main() {
 #endif
 
     // Enable etc safe callback
-    dbw_loop.attach(&dbw_check_handler, STATE_UPDATE_INTERVAL);
+    dbw_loop.attach(&dbw_check_handler, DBW_CHECK_INTERVAL);
 
-    while(true)
+    while (true)
         sleep();
 }
 
-void init_outputs() {
+void init_outputs()
+{
     // Initialize pinouts to rest values
     printf("Initializing pinouts");
     upshift.write(0);
@@ -116,7 +123,8 @@ void init_outputs() {
     ThisThread::sleep_for(CAN_BOOT_TIME);
 }
 
-void init_timers() {
+void init_timers()
+{
     printf("Starting timers");
     ecuTimer.reset();
     ecuTimer.start();
@@ -125,12 +133,15 @@ void init_timers() {
     canTimer.start();
 }
 
-void can_received() {
+void can_received()
+{
     CANMessage msg;
-    while(can.read(msg)) {
+    while (can.read(msg))
+    {
         canTimer.reset();
 
-        switch (msg.id) {
+        switch (msg.id)
+        {
             case STEERING_WHEEL_ID:
                 shift_received(msg);
                 break;
@@ -148,24 +159,28 @@ void can_received() {
     }
 }
 
-void shift_received(CANMessage msg) {
-    if (msg.data[1]) {
+void shift_received(CANMessage msg)
+{
+    if (msg.data[1])
+    {
         printf("\n---------- UPSHIFT ----------\n");
         upshift.write(1);
-        ThisThread::sleep_for(UPSHIFT_TIME);
-        upshift.write(0);
-    } else if (msg.data[2]) {
+        shift_reset_timeout.attach(&pin_reset(&upshift), UPSHIFT_TIME);
+    }
+    else if (msg.data[2])
+    {
         printf("\n---------- DOWNSHIFT ----------\n");
         downshift.write(1);
-        ThisThread::sleep_for(DOWNSHIFT_TIME);
-        downshift.write(0);
+        shift_reset_timeout.attach(&pin_reset(&downshift), DOWNSHIFT_TIME);
     }
 }
 
-void ecu_received(CANMessage msg) {
+void ecu_received(CANMessage msg)
+{
     ecuTimer.reset();
 
-    switch(msg.id) {
+    switch (msg.id)
+    {
         case ECU1_ID:
             engineState.rpm = (msg.data[1] << 8) + msg.data[0];
             break;
@@ -177,14 +192,15 @@ void ecu_received(CANMessage msg) {
     }
 }
 
-void dbw_received(CANMessage msg) {
+void dbw_received(CANMessage msg)
+{
     // each value is unsigned int 0-100
     uint8_t apps1 = msg.data[0];
     uint8_t apps2 = msg.data[1];
-    uint8_t tps1 =  msg.data[2];
-    uint8_t tps2 =  msg.data[3];
+    uint8_t tps1 = msg.data[2];
+    uint8_t tps2 = msg.data[3];
     {
-        ScopedLock<Mutex> lock(throttleState.mutex);
+        ScopedLock <Mutex> lock(throttleState.mutex);
         throttleState.APPS1 = apps1;
         throttleState.APPS2 = apps2;
         throttleState.TPS1 = tps1;
@@ -193,9 +209,10 @@ void dbw_received(CANMessage msg) {
 }
 
 // TODO kinda spaghetti tbh
-void check_state() {
+void check_state()
+{
     {
-        ScopedLock<Mutex> lock(bcmState.mutex);
+        ScopedLock <Mutex> lock(bcmState.mutex);
         // Check timers
         if (duration_cast<milliseconds>(ecuTimer.elapsed_time()) > ECU_TIMEOUT)
         {
@@ -212,7 +229,8 @@ void check_state() {
             engineState.running = true;
         }
 
-        if (duration_cast<milliseconds>(canTimer.elapsed_time()) > CAN_TIMEOUT) {
+        if (duration_cast<milliseconds>(canTimer.elapsed_time()) > CAN_TIMEOUT)
+        {
             bcmState.CANConnected = false;
             printf("CAN disconnected");
         }
@@ -229,7 +247,8 @@ void check_state() {
             bcmState.state = engineOff;
             printf("Set state to engine off");
         }
-        else if (engineState.rpm > ENGINE_IDLE_RPM && engineState.waterTemp >= (ENGINE_WARM_F + ENGINE_TEMP_DEADBAND))
+        else if (engineState.rpm > ENGINE_IDLE_RPM &&
+                 engineState.waterTemp >= (ENGINE_WARM_F + ENGINE_TEMP_DEADBAND))
         {
             bcmState.state = hotRunning;
             printf("Set state to engine warm");
@@ -243,9 +262,10 @@ void check_state() {
     set_state();
 }
 
-void check_dbw_status() {
+void check_dbw_status()
+{
     {
-        ScopedLock<Mutex> lock(throttleState.mutex);
+        ScopedLock <Mutex> lock(throttleState.mutex);
 
         // Check APPS1 vs APPS2
         if (abs(throttleState.APPS1 - throttleState.APPS2) >= APPS_VS_APPS_MAX_ERROR)
@@ -262,7 +282,7 @@ void check_dbw_status() {
         // Check APPS vs TPS as long as one is above idle threshold
         if ((abs(throttleState.APPS1 - throttleState.TPS1) >= APPS_VS_TPS_MAX_ERROR) &&
             ((throttleState.TPS1 > APPS_VS_TPS_ENABLE_THRESHOLD) ||
-            (throttleState.TPS2 > APPS_VS_TPS_ENABLE_THRESHOLD)))
+             (throttleState.TPS2 > APPS_VS_TPS_ENABLE_THRESHOLD)))
             throttleState.APPSvsTPSerrorCount++;
         else
             throttleState.APPSvsTPSerrorCount = 0;
@@ -279,8 +299,10 @@ void check_dbw_status() {
     }
 }
 
-void set_state() {
-    switch (bcmState.state) {
+void set_state()
+{
+    switch (bcmState.state)
+    {
         case safety:
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
@@ -315,4 +337,9 @@ void set_state() {
             printf("something is very broken");
             break;
     }
+}
+
+void pin_reset(DigitalOut *pin)
+{
+    pin.write(0);
 }

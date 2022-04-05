@@ -46,7 +46,7 @@ void dbw_received(CANMessage msg);
 void check_state();
 void check_dbw_status();
 void set_state();
-void pin_reset(DigitalOut *pin);
+void pin_reset();
 
 
 // Event Handlers
@@ -164,14 +164,14 @@ void shift_received(CANMessage msg)
     if (msg.data[1])
     {
         printf("\n---------- UPSHIFT ----------\n");
-        upshift.write(1);
-        shift_reset_timeout.attach(&pin_reset(&upshift), UPSHIFT_TIME);
+        upshift.write('+');
+        shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
     }
     else if (msg.data[2])
     {
         printf("\n---------- DOWNSHIFT ----------\n");
         downshift.write(1);
-        shift_reset_timeout.attach(&pin_reset(&downshift), DOWNSHIFT_TIME);
+        shift_reset_timeout.attach(&pin_reset, DOWNSHIFT_TIME);
     }
 }
 
@@ -339,7 +339,8 @@ void set_state()
     }
 }
 
-void pin_reset(DigitalOut *pin)
+void pin_reset()
 {
-    pin.write(0);
+    downshift.write(0);
+    upshift.write(0);
 }

@@ -7,6 +7,7 @@
 using namespace std::chrono;
 
 SWO_Channel swo("channel");
+Watchdog &watchdog = Watchdog::get_instance();
 
 CAN can(PIN_CAN_RX, PIN_CAN_TX, CAN_BAUD);
 
@@ -85,6 +86,9 @@ int main()
     printf("Starting CAN Listener...\n");
     can.attach(can_received_handler);
     printf("Listening on CAN\n");
+
+    // Start Watchdog
+    watchdog.start(WATCHDOG_TIMEOUT);
 
 #ifndef ETC_I_HARDLY_KNOW_HER
     // Enable ecu state callback
@@ -178,6 +182,7 @@ void shift_received(CANMessage msg)
 void ecu_received(CANMessage msg)
 {
     ecuTimer.reset();
+    watchdog.kick();
 
     switch (msg.id)
     {

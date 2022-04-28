@@ -10,6 +10,7 @@
 #define COOLING_KILL                    10000ms
 #define STATE_UPDATE_INTERVAL           1000ms
 #define DBW_CHECK_INTERVAL              10ms       // Frequency to check DBW sensors for error
+#define WATCHDOG_TIMEOUT                2000        // Watchdog timeout in ms
 
 #define ECU_BOOT_TIME                   250ms
 #define CAN_BOOT_TIME                   100ms

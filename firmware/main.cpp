@@ -182,7 +182,6 @@ void shift_received(CANMessage msg)
 void ecu_received(CANMessage msg)
 {
     ecuTimer.reset();
-    watchdog.kick();
 
     switch (msg.id)
     {
@@ -218,6 +217,8 @@ void check_state()
 {
     {
         ScopedLock <Mutex> lock(bcmState.mutex);
+
+        watchdog.kick();
         // Check timers
         if (duration_cast<milliseconds>(ecuTimer.elapsed_time()) > ECU_TIMEOUT)
         {

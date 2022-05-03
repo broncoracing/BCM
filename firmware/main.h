@@ -44,8 +44,8 @@ enum State {
 
 
 // Shift times in microseconds
-#define DOWNSHIFT_TIME                  150000us
-#define UPSHIFT_TIME                    100000us
+#define DOWNSHIFT_TIME                  140000us
+#define UPSHIFT_TIME                    125000us
 
 // ethrottle safety
 #define ETHROTTLE_MAX_ERROR_COUNT       10

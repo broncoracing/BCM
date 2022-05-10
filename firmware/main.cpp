@@ -191,7 +191,7 @@ void ecu_received(CANMessage msg)
         case ECU2_ID:
             // TODO: Verify message format, should probably abstract out in broncoracing/can-ids
             short temp = (msg.data[2] << 8) + msg.data[1];
-            engineState.waterTemp = ((temp / 10.0) * 1.8) + 32;
+            engineState.waterTemp = temp / 10.0;
             break;
     }
 }
@@ -227,7 +227,7 @@ void check_state()
 
             engineState.rpm = 0;
             engineState.waterTemp = 0;
-            printf("ECU Disconnected");
+            printf("\nECU Disconnected");
         }
         else
         {
@@ -238,7 +238,7 @@ void check_state()
         if (duration_cast<milliseconds>(canTimer.elapsed_time()) > CAN_TIMEOUT)
         {
             bcmState.CANConnected = false;
-            printf("CAN disconnected");
+            printf("\nCAN disconnected");
         }
         else
             bcmState.CANConnected = true;
@@ -246,23 +246,23 @@ void check_state()
         if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred)
         {
             bcmState.state = safety;
-            printf("Set state to safety");
+            printf("\nSet state to safety");
         }
         else if (engineState.rpm == 0 && bcmState.ECUConnected && bcmState.CANConnected)
         {
             bcmState.state = engineOff;
-            printf("Set state to engine off");
+            printf("\nSet state to engine off");
         }
         else if (engineState.rpm > ENGINE_IDLE_RPM &&
-                 engineState.waterTemp >= (ENGINE_WARM_F + ENGINE_TEMP_DEADBAND))
+                 engineState.waterTemp >= (ENGINE_WARM + ENGINE_TEMP_DEADBAND))
         {
             bcmState.state = hotRunning;
-            printf("Set state to engine warm");
+            printf("\nSet state to engine warm");
         }
-        else if (engineState.rpm > ENGINE_IDLE_RPM && engineState.waterTemp <= ENGINE_WARM_F)
+        else if (engineState.rpm > ENGINE_IDLE_RPM && engineState.waterTemp <= ENGINE_WARM)
         {
             bcmState.state = coldRunning;
-            printf("Set state to engine cold");
+            printf("\nSet state to engine cold");
         }
     }
     set_state();
@@ -300,7 +300,10 @@ void check_dbw_status()
         {
             etcEnable.write(0);
             throttleState.eThrottleErrorOccurred = true;
-            printf("ETC error occurred");
+            printf("ETC error occurred\nAPPS Error count: %d\nTPS Error count: %d\nBoth Error count: %d",
+                   throttleState.APPSvsTPSerrorCount,
+                   throttleState.TPSerrorCount,
+                   throttleState.APPSvsTPSerrorCount);
         }
     }
 }
@@ -315,7 +318,7 @@ void set_state()
             etcEnable.write(0);
             break;
         case engineOff:
-            if (engineState.waterTemp > ENGINE_WARM_F)
+            if (engineState.waterTemp > ENGINE_WARM)
             {
                 fan.write(FAN_COOLDOWN_DC);
                 pump.write(1);

@@ -12,8 +12,8 @@
 #define DBW_CHECK_INTERVAL              10ms       // Frequency to check DBW sensors for error
 #define WATCHDOG_TIMEOUT                2000        // Watchdog timeout in ms
 
-#define ECU_BOOT_TIME                   250ms
-#define CAN_BOOT_TIME                   100ms
+#define ECU_BOOT_TIME                   50ms
+#define CAN_BOOT_TIME                   50ms
 
 // Cooldown times in milliseconds
 #define FAN_COOLDOWN                    30000ms
@@ -24,11 +24,11 @@
 #define FAN_COOLDOWN_DC                 0.5f
 
 // For cooling fan and pump
-#define PWM_PERIOD_US                   100
+#define PWM_PERIOD_US                   1000
 
 // Parameters
-#define ENGINE_WARM_F                   100       // Fahrenheit
-#define ENGINE_TEMP_DEADBAND            20        // Fahrenheit
+#define ENGINE_WARM                     38       // Celsius
+#define ENGINE_TEMP_DEADBAND            7        // Celsius
 #define ENGINE_IDLE_RPM                 1000
 
 
@@ -53,10 +53,10 @@ enum State {
 #define TPS_VS_TPS_MAX_ERROR            10
 
 #define APPS_VS_TPS_MAX_ERROR_COUNT     50
-#define APPS_VS_TPS_MAX_ERROR           20        // include idle offset
+#define APPS_VS_TPS_MAX_ERROR           21        // include idle offset
 
 // when TPS is above this value, APPS vs TPS error checking is active
-#define APPS_VS_TPS_ENABLE_THRESHOLD    50
+#define APPS_VS_TPS_ENABLE_THRESHOLD    11
 
 // Disable printing macro
 #ifndef PRINT_STATUS
@@ -70,8 +70,8 @@ enum State {
 #define PIN_UPSHIFT                     PB_1
 #define PIN_WATERPUMP                   PB_2
 #define PIN_FAN                         PB_4
-#define PIN_ECUPOWER                    PB_5
-#define PIN_ETCENABLE                   PB_6
+#define PIN_ECUPOWER                    PB_6
+#define PIN_ETCENABLE                   PB_5
 
 struct BCMState {
     Mutex mutex;

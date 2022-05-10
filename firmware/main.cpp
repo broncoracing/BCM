@@ -27,6 +27,10 @@ Thread t;
 Ticker ecu_loop;
 Ticker dbw_loop;
 
+#ifdef PRINT_STATUS
+Ticker status_loop;
+#endif
+
 Timer ecuTimer;
 Timer canTimer;
 
@@ -48,6 +52,7 @@ void check_state();
 void check_dbw_status();
 void set_state();
 void pin_reset();
+void print_status();
 
 
 // Event Handlers
@@ -66,41 +71,58 @@ void dbw_check_handler()
     queue.call(check_dbw_status);
 }
 
+#ifdef PRINT_STATUS
+void print_status_handler()
+{
+    queue.call(print_status);
+}
+#endif
+
+
 int main()
 {
-#ifdef DEBUG_SWO
+#ifdef PRINT_STATUS
     // Print debug info over SWO
     swo.claim();
-    printf("Claimed SWO output\n");
-#endif //DEBUG_SWO
+    printf("\nClaimed SWO output\n");
+#endif
 
     // Start event queue thread
-    printf("Starting event queue thread...\n");
+    printf("\n\nStarting event queue thread...\n");
     t.start(callback(&queue, &EventQueue::dispatch_forever));
-    printf("Event queue thread running.\n");
+    printf("\nEvent queue thread running.\n");
 
     init_outputs();
     init_timers();
 
     // Enable CAN callback
-    printf("Starting CAN Listener...\n");
+    printf("\nStarting CAN Listener...\n");
     can.attach(can_received_handler);
-    printf("Listening on CAN\n");
+    printf("\nListening on CAN\n");
 
     // Start Watchdog
+    printf("\nStarting Watchdog");
     watchdog.start(WATCHDOG_TIMEOUT);
-
+    printf("\nWatchdog Started");
 #ifndef ETC_I_HARDLY_KNOW_HER
     // Enable ecu state callback
+    printf("\nStarting ECU update callback");
     ecu_loop.attach(&state_update_handler, STATE_UPDATE_INTERVAL);
+    printf("\nStarted ECU update callback");
+
+    // Enable etc safe callback
+    printf("\nStarting DBW update callback");
+    dbw_loop.attach(&dbw_check_handler, DBW_CHECK_INTERVAL);
+    printf("\nStarted DBW update callback");
 #else
-    printf("Overriding safety systems and turning on cooling");
+    printf("\nOverriding safety systems and turning on cooling");
     bcmState.state = override;
     set_state();
 #endif
 
-    // Enable etc safe callback
-    dbw_loop.attach(&dbw_check_handler, DBW_CHECK_INTERVAL);
+#ifdef PRINT_STATUS
+    status_loop.attach(&print_status_handler, STATUS_PRINT_INTERVAL);
+#endif
 
     while (true)
         sleep();
@@ -109,7 +131,7 @@ int main()
 void init_outputs()
 {
     // Initialize pinouts to rest values
-    printf("Initializing pinouts");
+    printf("\nInitializing pinouts");
     upshift.write(0);
     downshift.write(0);
     pump.write(0);
@@ -117,19 +139,21 @@ void init_outputs()
     fan.period_us(PWM_PERIOD_US);
 
     // Power on ECU
-    printf("Booting ECU");
+    printf("\nBooting ECU");
     ecuPower.write(1);
+    printf("\nECU booted");
 
     // Wait for ECU to boot, then turn on etc safe rail
     ThisThread::sleep_for(ECU_BOOT_TIME);
-    printf("Turning on ETC rail");
+    printf("\nTurning on ETC rail");
     etcEnable.write(1);
+    printf("\nETC Rail on");
     ThisThread::sleep_for(CAN_BOOT_TIME);
 }
 
 void init_timers()
 {
-    printf("Starting timers");
+    printf("\nStarting timers");
     ecuTimer.reset();
     ecuTimer.start();
 
@@ -227,7 +251,6 @@ void check_state()
 
             engineState.rpm = 0;
             engineState.waterTemp = 0;
-            printf("\nECU Disconnected");
         }
         else
         {
@@ -238,7 +261,6 @@ void check_state()
         if (duration_cast<milliseconds>(canTimer.elapsed_time()) > CAN_TIMEOUT)
         {
             bcmState.CANConnected = false;
-            printf("\nCAN disconnected");
         }
         else
             bcmState.CANConnected = true;
@@ -246,23 +268,19 @@ void check_state()
         if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred)
         {
             bcmState.state = safety;
-            printf("\nSet state to safety");
         }
         else if (engineState.rpm == 0 && bcmState.ECUConnected && bcmState.CANConnected)
         {
             bcmState.state = engineOff;
-            printf("\nSet state to engine off");
         }
         else if (engineState.rpm > ENGINE_IDLE_RPM &&
                  engineState.waterTemp >= (ENGINE_WARM + ENGINE_TEMP_DEADBAND))
         {
             bcmState.state = hotRunning;
-            printf("\nSet state to engine warm");
         }
         else if (engineState.rpm > ENGINE_IDLE_RPM && engineState.waterTemp <= ENGINE_WARM)
         {
             bcmState.state = coldRunning;
-            printf("\nSet state to engine cold");
         }
     }
     set_state();
@@ -289,21 +307,22 @@ void check_dbw_status()
         if ((abs(throttleState.APPS1 - throttleState.TPS1) >= APPS_VS_TPS_MAX_ERROR) &&
             ((throttleState.TPS1 > APPS_VS_TPS_ENABLE_THRESHOLD) ||
              (throttleState.TPS2 > APPS_VS_TPS_ENABLE_THRESHOLD)))
+        {
             throttleState.APPSvsTPSerrorCount++;
+        }
         else
+        {
             throttleState.APPSvsTPSerrorCount = 0;
+        }
 
         // If significant errors have occurred, shut off ETC SAFE power rail
         if ((throttleState.APPSerrorCount >= ETHROTTLE_MAX_ERROR_COUNT) ||
             (throttleState.TPSerrorCount >= ETHROTTLE_MAX_ERROR_COUNT) ||
             (throttleState.APPSvsTPSerrorCount >= APPS_VS_TPS_MAX_ERROR_COUNT))
         {
+            // Immediately kill power, this should be disabled if it causes issues
             etcEnable.write(0);
             throttleState.eThrottleErrorOccurred = true;
-            printf("ETC error occurred\nAPPS Error count: %d\nTPS Error count: %d\nBoth Error count: %d",
-                   throttleState.APPSvsTPSerrorCount,
-                   throttleState.TPSerrorCount,
-                   throttleState.APPSvsTPSerrorCount);
         }
     }
 }
@@ -352,4 +371,11 @@ void pin_reset()
 {
     downshift.write(0);
     upshift.write(0);
+}
+
+void print_status()
+{
+    printf("\nStatus:\n\tCANConnected:\t%d\n\tECUConnected:\t%d\n\teThrottleError:\t%d\n\tBCM State:\t%d",
+           bcmState.CANConnected, bcmState.ECUConnected, throttleState.eThrottleErrorOccurred, bcmState.state);
+
 }

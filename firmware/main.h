@@ -4,7 +4,7 @@
 
 /*********** System Settings ***********/
 
-#define PRINT_STATUS                               // Uncomment - print status
+//#define PRINT_STATUS                             // Uncomment - print status
 //#define ETC_I_HARDLY_KNOW_HER                    // Uncomment - Disable ETC safety for testing ONLY, forces fan + pump on
 #define STATUS_PRINT_INTERVAL           2000ms     // How often to print overall running status if PRINT_STATUS is enabled
 
@@ -16,7 +16,7 @@
 #define DBW_CHECK_INTERVAL              10ms        // Frequency to check DBW sensors for error
 #define WATCHDOG_TIMEOUT                2000        // Watchdog timeout in ms
 
-#define ECU_BOOT_TIME                   50ms
+#define ECU_BOOT_TIME                   250ms
 #define CAN_BOOT_TIME                   50ms
 
 // Pinouts

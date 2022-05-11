@@ -110,16 +110,15 @@ int main()
     ecu_loop.attach(&state_update_handler, STATE_UPDATE_INTERVAL);
     printf("\nStarted ECU update callback");
 
-    // Enable etc safe callback
-    printf("\nStarting DBW update callback");
-    dbw_loop.attach(&dbw_check_handler, DBW_CHECK_INTERVAL);
-    printf("\nStarted DBW update callback");
 #else
     printf("\nOverriding safety systems and turning on cooling");
     bcmState.state = override;
     set_state();
 #endif
-
+    // Enable etc safe callback
+    printf("\nStarting DBW update callback");
+    dbw_loop.attach(&dbw_check_handler, DBW_CHECK_INTERVAL);
+    printf("\nStarted DBW update callback");
 #ifdef PRINT_STATUS
     status_loop.attach(&print_status_handler, STATUS_PRINT_INTERVAL);
 #endif
@@ -242,7 +241,6 @@ void check_state()
     {
         ScopedLock <Mutex> lock(bcmState.mutex);
 
-        watchdog.kick();
         // Check timers
         if (duration_cast<milliseconds>(ecuTimer.elapsed_time()) > ECU_TIMEOUT)
         {
@@ -290,7 +288,7 @@ void check_dbw_status()
 {
     {
         ScopedLock <Mutex> lock(throttleState.mutex);
-
+        watchdog.kick();
         // Check APPS1 vs APPS2
         if (abs(throttleState.APPS1 - throttleState.APPS2) >= APPS_VS_APPS_MAX_ERROR)
             throttleState.APPSerrorCount++;
@@ -375,7 +373,8 @@ void pin_reset()
 
 void print_status()
 {
-    printf("\nStatus:\n\tCANConnected:\t%d\n\tECUConnected:\t%d\n\teThrottleError:\t%d\n\tBCM State:\t%d",
+    printf("\nStatus:\n\tCANConnected:\t%d\n\tECUConnected:\t%d\n\teThrottleError:\t%d\n\tBCM State:\t%d\n\n",
            bcmState.CANConnected, bcmState.ECUConnected, throttleState.eThrottleErrorOccurred, bcmState.state);
-
+    printf("\nETC:\n\tAPS err:\t%d\n\tTPS err:\t%d\n\tAPSvTPS err:\t%d\n",
+           throttleState.APPSerrorCount, throttleState.TPSerrorCount, throttleState.APPSvsTPSerrorCount);
 }

@@ -19,6 +19,7 @@ DigitalOut downshift(PIN_DOWNSHIFT);
 DigitalOut pump(PIN_WATERPUMP);
 DigitalOut etcEnable(PIN_ETCENABLE);
 DigitalOut ecuPower(PIN_ECUPOWER);
+DigitalIn faultIn(PIN_FAULT_IN);
 
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 
@@ -263,7 +264,7 @@ void check_state()
         else
             bcmState.CANConnected = true;
 
-        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred)
+        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred || !faultIn)
         {
             bcmState.state = safety;
         }
@@ -333,7 +334,7 @@ void set_state()
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
             etcEnable.write(0);
-            break;
+            ecu_loop.detach();
         case engineOff:
             if (engineState.waterTemp > ENGINE_WARM)
             {

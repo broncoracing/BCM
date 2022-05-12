@@ -28,6 +28,7 @@
 #define PIN_FAN                         PB_4
 #define PIN_ECUPOWER                    PB_6
 #define PIN_ETCENABLE                   PB_5
+#define PIN_FAULT_IN                    PA_3
 
 
 /*********** Cooling Settings ***********/

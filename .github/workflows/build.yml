@@ -45,5 +45,5 @@ jobs:
         name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: $filename
+          name: ${{ filename }}
           path: firmware/BUILD/${{ env.build_target }}/GCC_ARM-RELEASE/firmware.elf

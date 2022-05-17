@@ -19,6 +19,7 @@ DigitalOut downshift(PIN_DOWNSHIFT);
 DigitalOut pump(PIN_WATERPUMP);
 DigitalOut etcEnable(PIN_ETCENABLE);
 DigitalOut ecuPower(PIN_ECUPOWER);
+DigitalIn faultIn(PIN_FAULT_IN);
 
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 
@@ -53,6 +54,8 @@ void check_dbw_status();
 void set_state();
 void pin_reset();
 void print_status();
+void start_upshift();
+void start_downshift();
 
 
 // Event Handlers
@@ -186,20 +189,38 @@ void can_received()
     }
 }
 
+// Starts a shift after a timeout so that the ECU has a chance to do shit
 void shift_received(CANMessage msg)
 {
     if (msg.data[1])
     {
+        shift_reset_timeout.attach(&start_upshift, SHIFT_DELAY);
         printf("\n---------- UPSHIFT ----------\n");
-        upshift.write('+');
-        shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
+
+//        upshift.write('+');
+//        shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
     }
     else if (msg.data[2])
     {
+        shift_reset_timeout.attach(&start_downshift, SHIFT_DELAY);
         printf("\n---------- DOWNSHIFT ----------\n");
-        downshift.write(1);
-        shift_reset_timeout.attach(&pin_reset, DOWNSHIFT_TIME);
+
+//        downshift.write(1);
+//        shift_reset_timeout.attach(&pin_reset, DOWNSHIFT_TIME);
+
     }
+}
+
+// Start upshifting immediately
+void start_upshift() {
+    upshift.write('+');
+    shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
+}
+
+// Start downshifting immediately
+void start_downshift() {
+    downshift.write(1);
+    shift_reset_timeout.attach(&pin_reset, DOWNSHIFT_TIME);
 }
 
 void ecu_received(CANMessage msg)
@@ -263,7 +284,7 @@ void check_state()
         else
             bcmState.CANConnected = true;
 
-        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred)
+        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred || !faultIn)
         {
             bcmState.state = safety;
         }
@@ -333,7 +354,7 @@ void set_state()
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
             etcEnable.write(0);
-            break;
+            ecu_loop.detach();
         case engineOff:
             if (engineState.waterTemp > ENGINE_WARM)
             {

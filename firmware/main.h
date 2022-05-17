@@ -56,7 +56,7 @@
 // Shift times in microseconds
 #define DOWNSHIFT_TIME                  140000us
 #define UPSHIFT_TIME                    125000us
-
+#define SHIFT_DELAY                     10000us
 
 /*********** ETC Settings ***********/
 

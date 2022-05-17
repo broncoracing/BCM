@@ -196,18 +196,11 @@ void shift_received(CANMessage msg)
     {
         shift_reset_timeout.attach(&start_upshift, SHIFT_DELAY);
         printf("\n---------- UPSHIFT ----------\n");
-
-//        upshift.write('+');
-//        shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
     }
     else if (msg.data[2])
     {
         shift_reset_timeout.attach(&start_downshift, SHIFT_DELAY);
         printf("\n---------- DOWNSHIFT ----------\n");
-
-//        downshift.write(1);
-//        shift_reset_timeout.attach(&pin_reset, DOWNSHIFT_TIME);
-
     }
 }
 
@@ -354,7 +347,9 @@ void set_state()
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
             etcEnable.write(0);
-            ecu_loop.detach();
+            if (faultIn)
+                ecu_loop.detach();
+            break;
         case engineOff:
             if (engineState.waterTemp > ENGINE_WARM)
             {

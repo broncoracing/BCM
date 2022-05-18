@@ -277,7 +277,7 @@ void check_state()
         else
             bcmState.CANConnected = true;
 
-        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred || !faultIn)
+        if (!(bcmState.CANConnected) || throttleState.eThrottleErrorOccurred || faultIn)
         {
             bcmState.state = safety;
         }
@@ -347,7 +347,7 @@ void set_state()
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
             etcEnable.write(0);
-            if (faultIn)
+//            if (faultIn)
                 ecu_loop.detach();
             break;
         case engineOff:
@@ -389,8 +389,8 @@ void pin_reset()
 
 void print_status()
 {
-    printf("\nStatus:\n\tCANConnected:\t%d\n\tECUConnected:\t%d\n\teThrottleError:\t%d\n\tBCM State:\t%d\n\n",
-           bcmState.CANConnected, bcmState.ECUConnected, throttleState.eThrottleErrorOccurred, bcmState.state);
+    printf("\nStatus:\n\tCANConnected:\t%d\n\tECUConnected:\t%d\n\teThrottleError:\t%d\n\tfaultIn:\t%d\n\tBCM State:\t%d\n\n",
+           bcmState.CANConnected, bcmState.ECUConnected, throttleState.eThrottleErrorOccurred, (int)faultIn, bcmState.state);
     printf("\nETC:\n\tAPS err:\t%d\n\tTPS err:\t%d\n\tAPSvTPS err:\t%d\n",
            throttleState.APPSerrorCount, throttleState.TPSerrorCount, throttleState.APPSvsTPSerrorCount);
 }

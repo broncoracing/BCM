@@ -4,7 +4,7 @@
 
 /*********** System Settings ***********/
 
-//#define PRINT_STATUS                             // Uncomment - print status
+#define PRINT_STATUS                             // Uncomment - print status
 //#define ETC_I_HARDLY_KNOW_HER                    // Uncomment - Disable ETC safety for testing ONLY, forces fan + pump on
 #define STATUS_PRINT_INTERVAL           2000ms     // How often to print overall running status if PRINT_STATUS is enabled
 
@@ -45,7 +45,7 @@
 #define PWM_PERIOD_US                   1000
 
 // Parameters
-#define ENGINE_WARM                     38          // Celsius
+#define ENGINE_WARM                     70          // Celsius
 #define ENGINE_TEMP_DEADBAND            7           // Celsius
 
 
@@ -54,8 +54,8 @@
 #define ENGINE_IDLE_RPM                 1000
 
 // Shift times in microseconds
-#define DOWNSHIFT_TIME                  140000us
-#define UPSHIFT_TIME                    125000us
+#define DOWNSHIFT_TIME                  120000us
+#define UPSHIFT_TIME                    105000us
 #define SHIFT_DELAY                     10000us
 
 /*********** ETC Settings ***********/

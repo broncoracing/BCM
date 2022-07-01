@@ -4,7 +4,7 @@
 
 /*********** System Settings ***********/
 
-#define PRINT_STATUS                             // Uncomment - print status
+//#define PRINT_STATUS                             // Uncomment - print status
 //#define ETC_I_HARDLY_KNOW_HER                    // Uncomment - Disable ETC safety for testing ONLY, forces fan + pump on
 #define STATUS_PRINT_INTERVAL           2000ms     // How often to print overall running status if PRINT_STATUS is enabled
 
@@ -39,7 +39,7 @@
 
 // Fan duty cycles
 #define FAN_ACTIVE_DC                   1.0f
-#define FAN_COOLDOWN_DC                 0.5f
+#define FAN_COOLDOWN_DC                 0.7f
 
 // For cooling fan and pump
 #define PWM_PERIOD_US                   1000

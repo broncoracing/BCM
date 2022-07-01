@@ -11,7 +11,7 @@ Watchdog &watchdog = Watchdog::get_instance();
 
 CAN can(PIN_CAN_RX, PIN_CAN_TX, CAN_BAUD);
 
-// Initialize outputs
+// Init outputs
 PwmOut fan(PIN_FAN);
 
 DigitalOut upshift(PIN_UPSHIFT);
@@ -21,6 +21,8 @@ DigitalOut etcEnable(PIN_ETCENABLE);
 DigitalOut ecuPower(PIN_ECUPOWER);
 DigitalIn faultIn(PIN_FAULT_IN);
 
+
+// Init queue, timers, etc.
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 
 Thread t;
@@ -189,24 +191,24 @@ void can_received()
     }
 }
 
-// Starts a shift after a timeout so that the ECU has a chance to do shit
+// Starts a shift after a timeout so that the ECU has a chance to do a shift
 void shift_received(CANMessage msg)
 {
     if (msg.data[1])
     {
-        shift_reset_timeout.attach(&start_upshift, SHIFT_DELAY);
+        start_upshift();
         printf("\n---------- UPSHIFT ----------\n");
     }
     else if (msg.data[2])
     {
-        shift_reset_timeout.attach(&start_downshift, SHIFT_DELAY);
+        start_downshift();
         printf("\n---------- DOWNSHIFT ----------\n");
     }
 }
 
 // Start upshifting immediately
 void start_upshift() {
-    upshift.write('+');
+    upshift.write(1);
     shift_reset_timeout.attach(&pin_reset, UPSHIFT_TIME);
 }
 
@@ -347,7 +349,7 @@ void set_state()
             fan.write(FAN_ACTIVE_DC);
             pump.write(1);
             etcEnable.write(0);
-//            if (faultIn)
+            if (faultIn)
                 ecu_loop.detach();
             break;
         case engineOff:

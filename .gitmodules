@@ -1,3 +1,0 @@
-[submodule "firmware/can-ids"]
-	path = firmware/can-ids
-	url = git@github.com:broncoracing/can-ids

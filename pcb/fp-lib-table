@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "DTM13-12PA-12PB")(type "KiCad")(uri "${KIPRJMOD}/DTM13-12PA-12PB")(options "")(descr ""))
+)

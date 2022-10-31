@@ -1,0 +1,23 @@
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 303:Plugin executed on: 'linux'
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 304:Plugin executed with python version: '3.10.7 (main, Sep  6 2022, 21:22:27) [GCC 12.2.0]'
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 305:KiCad build version: (6.0.8)
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 306:Plugin version: 1.2.1
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 307:Frame repr: <wx._core.Frame object at 0x7f75f075ef80>
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 331:Preparing replicator with R5 as a reference
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.replicate_layout 106:getting a list of all footprints on board
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 359:source anchor footprint is 'R5'
+Located on: ['High-side Channel 0']
+With filenames: ['File: highside.kicad_sch']
+With sheet_id:['High-side Channel 0']
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 366:Corresponding footprints are 
+[('R41', ['High-side Channel 5']), ('R35', ['High-side Channel 4']), ('R29', ['High-side Channel 3']), ('R23', ['High-side Channel 2']), ('R17', ['High-side Channel 1']), ('R5', ['High-side Channel 0'])]
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 378:Showing dialog
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'High-side Channel 0', file:'File: highside.kicad_sch'
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['High-side Channel 0']
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 384:Toolbar position: wx.Point(1475, 152)
+10-31 11:20:02 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 390:Dialog position: wx.Point(1111, 152)
+10-31 11:20:16 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'High-side Channel 0', file:'File: highside.kicad_sch'
+10-31 11:20:16 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
+10-31 11:20:16 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['High-side Channel 0']
+10-31 11:20:24 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 232:User canceled the dialog

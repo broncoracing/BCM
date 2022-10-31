@@ -45,7 +45,7 @@
         "silk_text_upright": false,
         "zones": {
           "45_degree_only": false,
-          "min_clearance": 0.0
+          "min_clearance": 0.25
         }
       },
       "diff_pair_dimensions": [
@@ -359,7 +359,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "STM32F103_Reference.kicad_pro",
+    "filename": "PCB.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -394,9 +394,7 @@
         "nets": [
           "+3.3VA",
           "+3V3",
-          "/VBUS",
-          "GND",
-          "VCC"
+          "GND"
         ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
@@ -416,34 +414,11 @@
         "microvia_drill": 0.1,
         "name": "Signal",
         "nets": [
-          "/BOOT0",
-          "/CAN+",
-          "/CAN-",
-          "/HSE_IN",
-          "/HSE_OUT",
-          "/LED_STAT",
-          "/NRST",
           "CANRX",
           "CANTX",
-          "Net-(D1-Pad1)",
-          "Net-(D2-Pad1)",
-          "Net-(J2-PadA5)",
-          "Net-(J2-PadB5)",
-          "Net-(JP1-Pad2)",
           "SWCLK",
           "SWDIO",
-          "SWO",
-          "USB_D+",
-          "USB_D-",
-          "unconnected-(J2-PadA8)",
-          "unconnected-(J2-PadB8)",
-          "unconnected-(J2-PadS1)",
-          "unconnected-(J4-Pad3)",
-          "unconnected-(U1-Pad5)",
-          "unconnected-(U3-Pad25)",
-          "unconnected-(U3-Pad26)",
-          "unconnected-(U3-Pad27)",
-          "unconnected-(U3-Pad28)"
+          "SWO"
         ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
@@ -511,6 +486,58 @@
     [
       "68f34db6-b185-48e2-8817-fb07f7d1240e",
       ""
+    ],
+    [
+      "1d08d960-24a6-461a-b4f3-543e0f014558",
+      "STM32"
+    ],
+    [
+      "ae4e646b-9a05-48be-bf6c-68da84d9d52e",
+      "High-side Channel 0"
+    ],
+    [
+      "812bafd9-a772-4dd5-bf65-a63d4d3b191c",
+      "Low-side channel 0"
+    ],
+    [
+      "258a74b2-a6f9-434b-bb99-5c355ab92942",
+      "Low-side channel 1"
+    ],
+    [
+      "58f40aec-f0c5-45fb-b2a5-fb878bcf2c18",
+      "Low-side channel 2"
+    ],
+    [
+      "2934fbe5-bc64-4449-8599-03b4420a0e3f",
+      "Low-side channel 3"
+    ],
+    [
+      "09a3d3f5-e1c8-4be8-8356-7bbb35a91135",
+      "Low-side channel 4"
+    ],
+    [
+      "30ed6370-9cea-4d17-8bf0-08683c8de588",
+      "Low-side channel 5"
+    ],
+    [
+      "496188c3-a3dc-4b98-bff1-934cce67dd3e",
+      "High-side Channel 1"
+    ],
+    [
+      "ff098e47-0638-492d-813e-32e8d1bad0f4",
+      "High-side Channel 2"
+    ],
+    [
+      "a8270a18-3325-4c2c-a3fe-9714bf89dda6",
+      "High-side Channel 3"
+    ],
+    [
+      "2cf0164e-4adc-4ae2-9491-d5b1436fcd30",
+      "High-side Channel 4"
+    ],
+    [
+      "afcbb60a-c42d-417a-bf20-3b74b8681bbd",
+      "High-side Channel 5"
     ]
   ],
   "text_variables": {}

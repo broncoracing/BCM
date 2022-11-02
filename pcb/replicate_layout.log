@@ -1,80 +1,75 @@
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 303:Plugin executed on: 'linux'
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 304:Plugin executed with python version: '3.10.7 (main, Sep  6 2022, 21:22:27) [GCC 12.2.0]'
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 305:KiCad build version: (6.0.8)
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 306:Plugin version: 1.2.1
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 307:Frame repr: <wx._core.Frame object at 0x7f06202a6f80>
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 331:Preparing replicator with R5 as a reference
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.replicate_layout 106:getting a list of all footprints on board
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 359:source anchor footprint is 'R5'
-Located on: ['High-side Channel 0']
-With filenames: ['File: highside.kicad_sch']
-With sheet_id:['High-side Channel 0']
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 366:Corresponding footprints are 
-[('R17', ['High-side Channel 1']), ('R23', ['High-side Channel 2']), ('R41', ['High-side Channel 5']), ('R35', ['High-side Channel 4']), ('R5', ['High-side Channel 0']), ('R29', ['High-side Channel 3'])]
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 378:Showing dialog
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'High-side Channel 0', file:'File: highside.kicad_sch'
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['High-side Channel 0']
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 384:Toolbar position: wx.Point(1475, 152)
-10-31 11:31:20 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 390:Dialog position: wx.Point(1111, 152)
-10-31 11:31:22 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'High-side Channel 0', file:'File: highside.kicad_sch'
-10-31 11:31:22 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
-10-31 11:31:22 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['High-side Channel 0']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'High-side Channel 0', file:'File: highside.kicad_sch'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 157:Replicating layout
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 154:Starting replication of sheets: [['High-side Channel 1'], ['High-side Channel 2'], ['High-side Channel 3'], ['High-side Channel 4'], ['High-side Channel 5']]
-on level: ['High-side Channel 0']
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 303:Plugin executed on: 'linux'
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 304:Plugin executed with python version: '3.10.6 (main, Aug  3 2022, 17:39:45) [GCC 12.1.1 20220730]'
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 305:KiCad build version: (6.0.7)
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 306:Plugin version: 1.2.1
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 307:Frame repr: <wx._core.Frame object at 0x7fba5646f1c0>
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 331:Preparing replicator with D6 as a reference
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.replicate_layout 106:getting a list of all footprints on board
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 359:source anchor footprint is 'D6'
+Located on: ['Low-side channel 0']
+With filenames: ['lowside.kicad_sch']
+With sheet_id:['Low-side channel 0']
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 366:Corresponding footprints are 
+[('D11', ['Low-side channel 5']), ('D10', ['Low-side channel 4']), ('D9', ['Low-side channel 3']), ('D8', ['Low-side channel 2']), ('D7', ['Low-side channel 1']), ('D6', ['Low-side channel 0'])]
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 378:Showing dialog
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'Low-side channel 0', file:'lowside.kicad_sch'
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['Low-side channel 1'], ['Low-side channel 2'], ['Low-side channel 3'], ['Low-side channel 4'], ['Low-side channel 5']]
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['Low-side channel 0']
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 384:Toolbar position: wx.Point(3806, 92)
+11-01 23:47:55 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 390:Dialog position: wx.Point(3442, 92)
+11-01 23:47:56 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'Low-side channel 0', file:'lowside.kicad_sch'
+11-01 23:47:56 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['Low-side channel 1'], ['Low-side channel 2'], ['Low-side channel 3'], ['Low-side channel 4'], ['Low-side channel 5']]
+11-01 23:47:56 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1112:Level selected: ['Low-side channel 0']
+11-01 23:47:57 com_github_MitjaNemec_ReplicateLayout.replicate_layout 344:constructing a list of sheets suitable for replication on level:'Low-side channel 0', file:'lowside.kicad_sch'
+11-01 23:47:57 com_github_MitjaNemec_ReplicateLayout.replicate_layout 381:suitable sheets are:[['Low-side channel 1'], ['Low-side channel 2'], ['Low-side channel 3'], ['Low-side channel 4'], ['Low-side channel 5']]
+11-01 23:47:57 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 157:Replicating layout
+11-01 23:47:57 com_github_MitjaNemec_ReplicateLayout.replicate_layout 154:Starting replication of sheets: [['Low-side channel 1'], ['Low-side channel 2'], ['Low-side channel 3'], ['Low-side channel 4'], ['Low-side channel 5']]
+on level: ['Low-side channel 0']
 with tracks=True, zone=True, text=True, text=True, containing=False, remove=False, locked footprints=False, by_group=False
-10-31 11:31:31 root 243:updating GUI message: 'Preparing for replication'
-10-31 11:31:31 root 248:updating GUI with: 0
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 224:Getting the list of source footprints
-10-31 11:31:31 root 248:updating GUI with: 0
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 239:Getting the list of all the remaining footprints
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 244:Getting nets local to source footprints
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 247:Getting source bounding box
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 251:Getting source tracks
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 266:Getting source zones
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 275:Getting source text items
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 284:Getting source drawing items
-10-31 11:31:31 root 243:updating GUI message: 'Replicating footprints'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 678:Replicating footprints
-10-31 11:31:31 root 248:updating GUI with: 0
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['High-side Channel 1']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['High-side Channel 2']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['High-side Channel 3']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['High-side Channel 4']
-10-31 11:31:31 root 248:updating GUI with: 74
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['High-side Channel 5']
-10-31 11:31:31 root 248:updating GUI with: 92
-10-31 11:31:31 root 243:updating GUI message: 'Replicating tracks'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 844:Replicating tracks
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['High-side Channel 1']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['High-side Channel 2']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['High-side Channel 3']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['High-side Channel 4']
-10-31 11:31:31 root 248:updating GUI with: 70
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['High-side Channel 5']
-10-31 11:31:31 root 243:updating GUI message: 'Replicating zones'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 909:Replicating zones
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['High-side Channel 1']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['High-side Channel 2']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['High-side Channel 3']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['High-side Channel 4']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['High-side Channel 5']
-10-31 11:31:31 root 248:updating GUI with: 90
-10-31 11:31:31 root 243:updating GUI message: 'Replicating text'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 985:Replicating text
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['High-side Channel 1']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['High-side Channel 2']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['High-side Channel 3']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['High-side Channel 4']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['High-side Channel 5']
-10-31 11:31:31 root 243:updating GUI message: 'Replicating drawings'
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1032:Replicating drawings
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['High-side Channel 1']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['High-side Channel 2']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['High-side Channel 3']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['High-side Channel 4']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['High-side Channel 5']
-10-31 11:31:31 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 177:Replication complete
+11-01 23:47:57 root 243:updating GUI message: 'Preparing for replication'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 224:Getting the list of source footprints
+11-01 23:47:58 root 248:updating GUI with: 0
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 239:Getting the list of all the remaining footprints
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 244:Getting nets local to source footprints
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 247:Getting source bounding box
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 251:Getting source tracks
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 266:Getting source zones
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 275:Getting source text items
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 284:Getting source drawing items
+11-01 23:47:58 root 243:updating GUI message: 'Replicating footprints'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 678:Replicating footprints
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['Low-side channel 1']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['Low-side channel 2']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['Low-side channel 3']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['Low-side channel 4']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 684:Replicating footprints on sheet ['Low-side channel 5']
+11-01 23:47:58 root 243:updating GUI message: 'Replicating tracks'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 844:Replicating tracks
+11-01 23:47:58 root 248:updating GUI with: 0
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['Low-side channel 1']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['Low-side channel 2']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['Low-side channel 3']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['Low-side channel 4']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 850:Replicating tracks on sheet ['Low-side channel 5']
+11-01 23:47:58 root 243:updating GUI message: 'Replicating zones'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 909:Replicating zones
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['Low-side channel 1']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['Low-side channel 2']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['Low-side channel 3']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['Low-side channel 4']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 916:Replicating zones on sheet ['Low-side channel 5']
+11-01 23:47:58 root 243:updating GUI message: 'Replicating text'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 985:Replicating text
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['Low-side channel 1']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['Low-side channel 2']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['Low-side channel 3']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['Low-side channel 4']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 992:Replicating text on sheet ['Low-side channel 5']
+11-01 23:47:58 root 243:updating GUI message: 'Replicating drawings'
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1032:Replicating drawings
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['Low-side channel 1']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['Low-side channel 2']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['Low-side channel 3']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['Low-side channel 4']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.replicate_layout 1038:Replicating drawings on sheet ['Low-side channel 5']
+11-01 23:47:58 com_github_MitjaNemec_ReplicateLayout.action_replicate_layout 177:Replication complete

@@ -730,7 +730,7 @@
   (symbol (lib_id "Transistor_FET:Si4162DY") (at 157.48 91.44 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 92b722ea-ca79-4799-90e4-1fd9f27fa099)
-    (property "Reference" "Q6" (id 0) (at 163.83 90.1699 0)
+    (property "Reference" "Q1" (id 0) (at 163.83 90.1699 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "Si4162DY" (id 1) (at 163.83 92.7099 0)

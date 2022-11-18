@@ -844,6 +844,7 @@
     (uuid e6280de2-e926-4dc8-a37f-c1847c7c16d1)
   )
 
+  (no_connect (at 205.74 133.35) (uuid 30f88fc7-478f-4c2c-8cff-506054ee3f23))
   (no_connect (at 186.69 91.44) (uuid 33f46386-3986-44b7-80fb-468d1914d032))
 
   (wire (pts (xy 181.61 144.78) (xy 181.61 143.51))
@@ -1228,10 +1229,6 @@
   (label "UU1" (at 146.05 154.94 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 57c2530f-6373-42d6-b603-cc5e76582971)
-  )
-  (label "UU8" (at 205.74 133.35 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 60bff800-cd4b-420f-8068-59104adba493)
   )
   (label "UU2" (at 193.04 133.35 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))

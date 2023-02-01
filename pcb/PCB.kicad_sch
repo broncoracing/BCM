@@ -2362,7 +2362,7 @@
     (uuid d6bde4d9-ffb7-4d4e-ae84-524e1254604a)
     (property "Reference" "J1" (id 0) (at 222.25 67.31 0))
     (property "Value" "DTM1312PA12PBR008" (id 1) (at 222.25 69.85 0))
-    (property "Footprint" "TE_DTM1312PA12PBR008" (id 2) (at 222.25 87.63 0)
+    (property "Footprint" "DTM13-12PA-12PB:TE_DTM1312PA12PBR008" (id 2) (at 222.25 87.63 0)
       (effects (font (size 1.27 1.27)) (justify left bottom) hide)
     )
     (property "Datasheet" "" (id 3) (at 222.25 87.63 0)
@@ -3472,7 +3472,7 @@
       (reference "H1") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
     (path "/d6bde4d9-ffb7-4d4e-ae84-524e1254604a"
-      (reference "J1") (unit 1) (value "DTM1312PA12PBR008") (footprint "TE_DTM1312PA12PBR008")
+      (reference "J1") (unit 1) (value "DTM1312PA12PBR008") (footprint "DTM13-12PA-12PB:TE_DTM1312PA12PBR008")
     )
     (path "/1d08d960-24a6-461a-b4f3-543e0f014558/86b61b36-28e1-4d1c-9f8e-bc6fc9a33198"
       (reference "J2") (unit 1) (value "TC2030") (footprint "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical")

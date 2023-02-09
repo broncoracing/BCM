@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "TC2030")(type "KiCad")(uri "${KIPRJMOD}/kicad-libraries/TC2030.kicad_sym")(options "")(descr ""))
+  (lib (name "DTM1312PA12PBR008")(type "Legacy")(uri "${KIPRJMOD}/DTM13-12PA-12PB/DTM1312PA12PBR008.lib")(options "")(descr ""))
+)

@@ -7110,7 +7110,7 @@
   (gr_text "Bronco Racing\nBCM" (at 72.263 49.657) (layer "F.SilkS") (tstamp 7a1f97f7-246b-4769-ab63-96f8874f1227)
     (effects (font (size 2.5 2.5) (thickness 0.4)) (justify left))
   )
-  (gr_text "Jack LeFevre\nNovember 2022" (at 109.982 58.039) (layer "F.SilkS") (tstamp 81cb0d2f-6be5-4691-adad-64d5968444c9)
+  (gr_text "Jack LeFevre\nMarch 2023" (at 109.982 58.039) (layer "F.SilkS") (tstamp 81cb0d2f-6be5-4691-adad-64d5968444c9)
     (effects (font (size 2 2.3) (thickness 0.3)))
   )
 

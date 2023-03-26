@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "can-ids/CAN.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,7 +102,7 @@ void can_irq(CAN_HandleTypeDef *pcan) {
   if(msg.IDE == CAN_ID_STD) { // Standard CAN ID, we don't use extended IDs.
     switch (msg.StdId)
       {
-      case 0xB0:
+      case BOOTLOADER_ID:
         __NVIC_SystemReset(); // Reset to bootloader
         break;
       
@@ -127,7 +127,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   // Relocate vector table to work with bootloader
   // THIS IS CRITICAL FOR THE APP TO WORK, DO NOT DELETE!
-	//SCB->VTOR = (uint32_t)0x08003000;
+	SCB->VTOR = (uint32_t)0x08003000;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

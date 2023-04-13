@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "pwm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,27 +69,6 @@ void can_irq(CAN_HandleTypeDef *pcan);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint16_t pwm_frequency_01 = 1;
-uint16_t pwm_frequency_2345 = 20;
-uint16_t pwm_duties[6] = {0};
-
-void update_pwm(void) {
-  // Channel 0/1
-  TIM2->ARR = 0xFFFE / pwm_frequency_01;
-  uint32_t arr01 = TIM2->ARR + 2;
-  TIM2->CCR3 = (arr01 * (uint32_t)pwm_duties[0]) >> 16;
-  TIM2->CCR4 = (arr01 * (uint32_t)pwm_duties[1]) >> 16; 
-
-  // Remaining channels
-  TIM1->ARR = 0xFFFE / pwm_frequency_2345;
-  uint32_t arr2345 = TIM1->ARR + 2;
-  TIM1->CCR1 = (arr2345 * (uint32_t)pwm_duties[2]) >> 16;
-  TIM1->CCR2 = (arr2345 * (uint32_t)pwm_duties[3]) >> 16; 
-  TIM1->CCR3 = (arr2345 * (uint32_t)pwm_duties[4]) >> 16;
-  TIM1->CCR4 = (arr2345 * (uint32_t)pwm_duties[5]) >> 16;
-}
-
-
 // CAN Interrupt handler. Called whenever a new CAN frame is received.
 void can_irq(CAN_HandleTypeDef *pcan) {
   // Message header
@@ -127,7 +106,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   // Relocate vector table to work with bootloader
   // THIS IS CRITICAL FOR THE APP TO WORK, DO NOT DELETE!
-	//SCB->VTOR = (uint32_t)0x08003000;
+	SCB->VTOR = (uint32_t)0x08003000;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -159,14 +138,10 @@ int main(void)
   // Calibrate The ADC On Power-Up For Better Accuracy
   HAL_ADCEx_Calibration_Start(&hadc1);
 
-  // update_pwm();
 
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
+  pwm_frequency_2345 = 24;
+  update_pwm();
+  init_pwm();
 
   /* USER CODE END 2 */
 
@@ -182,12 +157,12 @@ int main(void)
 
     // Toggle status LED
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc_values, 1);
-    //pwm_frequency_01 = (pwm_frequency_01 + 1) % 16;
-    for(uint8_t i = 0; i < 6; ++i) {
-      pwm_duties[i] += 100;
-      if(pwm_duties[i] < 0x6000) pwm_duties[i] = 0x6000;
-    }
-    update_pwm();
+    // //pwm_frequency_01 = (pwm_frequency_01 + 1) % 16;
+    // for(uint8_t i = 0; i < 6; ++i) {
+    //   pwm_duties[i] += 100;
+    //   if(pwm_duties[i] < 0x6000) pwm_duties[i] = 0x6000;
+    // }
+    // update_pwm();
 
     output_sw_timer ++;
     if(output_sw_timer > 50) {

@@ -85,7 +85,24 @@ void can_irq(CAN_HandleTypeDef *pcan) {
       case BOOTLOADER_ID:
         __NVIC_SystemReset(); // Reset to bootloader
         break;
-      
+      case BCM_COMMAND_ID:
+        uint8_t water_pump_duty = read_field_u8(&BCM_COMMAND_water_pump_duty, data);
+        uint8_t rad_fan_duty = read_field_u8(&BCM_COMMAND_radiator_fan_duty, data);
+        uint8_t extra_fan_duty = read_field_u8(&BCM_COMMAND_extra_fan_duty, data);
+
+        pwm_duties[3] = ((uint32_t)water_pump_duty) * 65535 / 100;
+        pwm_duties[5] = ((uint32_t)rad_fan_duty) * 65535 / 100;
+        pwm_duties[4] = ((uint32_t)extra_fan_duty) * 65535 / 100;
+        update_pwm();
+
+        uint8_t upshift = read_field_u8(&BCM_COMMAND_upshift, data);
+        uint8_t downshift = read_field_u8(&BCM_COMMAND_downshift, data);
+        uint8_t brake_light = read_field_u8(&BCM_COMMAND_brake_light, data);
+
+        HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, upshift);
+        HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, downshift);
+        HAL_GPIO_WritePin(H3_GPIO_Port, H3_Pin, brake_light);
+        break;
       default:
         // Default behavior for unrecognized CAN IDs. Probably just ignore.
         break;
@@ -107,7 +124,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   // Relocate vector table to work with bootloader
   // THIS IS CRITICAL FOR THE APP TO WORK, DO NOT DELETE!
-	SCB->VTOR = (uint32_t)0x08003000;
+  SCB->VTOR = (uint32_t)0x08003000;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/

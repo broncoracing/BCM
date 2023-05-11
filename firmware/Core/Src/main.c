@@ -157,18 +157,21 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc1);
 
 
-  pwm_frequency_2345 = 24;
-  update_pwm();
-  init_pwm();
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint32_t output_sw_timer = 0;
   for(uint8_t i = 0; i < 6; ++i){
-    pwm_duties[i] = 0x6000;
+    pwm_duties[i] = 0;
   }
+
+  // Fuel pump is constantly on
+  pwm_duties[1] = 0xFFFF;
+  pwm_frequency_2345 = 24;
+  update_pwm();
+  init_pwm();
+
   while (1)
   {
     HAL_Delay(50); // Main Loop (Could be done with systick instead)

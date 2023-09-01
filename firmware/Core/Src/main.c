@@ -90,7 +90,7 @@ void can_irq(CAN_HandleTypeDef *pcan) {
         uint8_t rad_fan_duty = read_field_u8(&BCM_COMMAND_radiator_fan_duty, data);
         uint8_t extra_fan_duty = read_field_u8(&BCM_COMMAND_extra_fan_duty, data);
 
-        pwm_duties[3] = ((uint32_t)water_pump_duty) * 65535 / 100;
+        pwm_duties[2] = ((uint32_t)water_pump_duty) * 65535 / 100;
         pwm_duties[5] = ((uint32_t)rad_fan_duty) * 65535 / 100;
         pwm_duties[4] = ((uint32_t)extra_fan_duty) * 65535 / 100;
         update_pwm();
@@ -168,6 +168,7 @@ int main(void)
 
   // Fuel pump is constantly on
   pwm_duties[1] = 0xFFFF;
+  pwm_frequency_01 = 24;
   pwm_frequency_2345 = 24;
   update_pwm();
   init_pwm();
@@ -185,16 +186,16 @@ int main(void)
     // }
     // update_pwm();
 
-    output_sw_timer ++;
-    if(output_sw_timer > 50) {
-      HAL_GPIO_TogglePin(H0_GPIO_Port, H0_Pin);
-      HAL_GPIO_TogglePin(H1_GPIO_Port, H1_Pin);
-      HAL_GPIO_TogglePin(H2_GPIO_Port, H2_Pin);
-      HAL_GPIO_TogglePin(H3_GPIO_Port, H3_Pin);
-      HAL_GPIO_TogglePin(H4_GPIO_Port, H4_Pin);
-      HAL_GPIO_TogglePin(H5_GPIO_Port, H5_Pin);
-      output_sw_timer = 0;
-    }
+    // output_sw_timer ++;
+    // if(output_sw_timer > 50) {
+    //   HAL_GPIO_TogglePin(H0_GPIO_Port, H0_Pin);
+    //   HAL_GPIO_TogglePin(H1_GPIO_Port, H1_Pin);
+    //   HAL_GPIO_TogglePin(H2_GPIO_Port, H2_Pin);
+    //   HAL_GPIO_TogglePin(H3_GPIO_Port, H3_Pin);
+    //   HAL_GPIO_TogglePin(H4_GPIO_Port, H4_Pin);
+    //   HAL_GPIO_TogglePin(H5_GPIO_Port, H5_Pin);
+    //   output_sw_timer = 0;
+    // }
 
     /* USER CODE END WHILE */
 

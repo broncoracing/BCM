@@ -29,6 +29,7 @@ pcb/*-backups/*
 
 # build dir
 firmware/build/*
+firmware/STM32Make.make
 
 #useless dirs
 Project\ Outputs

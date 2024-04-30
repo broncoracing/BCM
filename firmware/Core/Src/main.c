@@ -85,24 +85,45 @@ void can_irq(CAN_HandleTypeDef *pcan) {
       case BOOTLOADER_ID:
         __NVIC_SystemReset(); // Reset to bootloader
         break;
-      case BCM_COMMAND_ID:
-        uint8_t water_pump_duty = read_field_u8(&BCM_COMMAND_water_pump_duty, data);
-        uint8_t rad_fan_duty = read_field_u8(&BCM_COMMAND_radiator_fan_duty, data);
-        uint8_t extra_fan_duty = read_field_u8(&BCM_COMMAND_extra_fan_duty, data);
+      case BCM_COMMAND_EV_ID:
+        // set PWM duties for low-side drivers
+        pwm_duties[0] = read_field_u8(&BCM_COMMAND_EV_L0_AccumPump, data);
+        pwm_duties[1] = read_field_u8(&BCM_COMMAND_EV_L1_MotorPump, data);
+        pwm_duties[2] = read_field_u8(&BCM_COMMAND_EV_L2_AccumFan, data);
+        pwm_duties[3] = read_field_u8(&BCM_COMMAND_EV_L3_MotorFan, data);
+        pwm_duties[4] = read_field_u8(&BCM_COMMAND_EV_L4_BrakeLight, data);
+        pwm_duties[5] = read_field_u8(&BCM_COMMAND_EV_L5_Sound, data);
 
-        pwm_duties[2] = ((uint32_t)water_pump_duty) * 65535 / 100;
-        pwm_duties[5] = ((uint32_t)rad_fan_duty) * 65535 / 100;
-        pwm_duties[4] = ((uint32_t)extra_fan_duty) * 65535 / 100;
-        update_pwm();
+        // set high-side drivers
+        HAL_GPIO_WritePin(H0_GPIO_Port, H0_Pin, read_field_u8(&BCM_COMMAND_EV_H0_ShutdownPower, data));
+        HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, read_field_u8(&BCM_COMMAND_EV_H1_DashboardPower, data));
+        HAL_GPIO_WritePin(H2_GPIO_Port, H2_Pin, read_field_u8(&BCM_COMMAND_EV_H2_BSPDPower, data));
+        HAL_GPIO_WritePin(H3_GPIO_Port, H3_Pin, read_field_u8(&BCM_COMMAND_EV_H3_AccumulatorPower, data));
 
-        uint8_t upshift = read_field_u8(&BCM_COMMAND_upshift, data);
-        uint8_t downshift = read_field_u8(&BCM_COMMAND_downshift, data);
-        uint8_t brake_light = read_field_u8(&BCM_COMMAND_brake_light, data);
+        // dont let the VCU commit suicide
+        // HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, 0);
 
-        HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, upshift);
-        HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, downshift);
-        HAL_GPIO_WritePin(H3_GPIO_Port, H3_Pin, brake_light);
+        HAL_GPIO_WritePin(H5_GPIO_Port, H5_Pin, read_field_u8(&BCM_COMMAND_EV_H5_InverterPower, data));
         break;
+
+      // case BCM_COMMAND_ID:
+      //   uint8_t water_pump_duty = read_field_u8(&BCM_COMMAND_water_pump_duty, data);
+      //   uint8_t rad_fan_duty = read_field_u8(&BCM_COMMAND_radiator_fan_duty, data);
+      //   uint8_t extra_fan_duty = read_field_u8(&BCM_COMMAND_extra_fan_duty, data);
+
+      //   pwm_duties[2] = ((uint32_t)water_pump_duty) * 65535 / 100;
+      //   pwm_duties[5] = ((uint32_t)rad_fan_duty) * 65535 / 100;
+      //   pwm_duties[4] = ((uint32_t)extra_fan_duty) * 65535 / 100;
+      //   update_pwm();
+
+      //   uint8_t upshift = read_field_u8(&BCM_COMMAND_upshift, data);
+      //   uint8_t downshift = read_field_u8(&BCM_COMMAND_downshift, data);
+      //   uint8_t brake_light = read_field_u8(&BCM_COMMAND_brake_light, data);
+
+      //   HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, upshift);
+      //   HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, downshift);
+      //   HAL_GPIO_WritePin(H3_GPIO_Port, H3_Pin, brake_light);
+      //   break;
       default:
         // Default behavior for unrecognized CAN IDs. Probably just ignore.
         break;
@@ -166,8 +187,17 @@ int main(void)
     pwm_duties[i] = 0;
   }
 
-  // Fuel pump is constantly on
-  pwm_duties[1] = 0xFFFF;
+  HAL_GPIO_WritePin(H0_GPIO_Port, H0_Pin, 0);
+  HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, 0);
+  HAL_GPIO_WritePin(H2_GPIO_Port, H2_Pin, 0);
+  HAL_GPIO_WritePin(H3_GPIO_Port, H3_Pin, 0);
+  HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, 0);
+  HAL_GPIO_WritePin(H5_GPIO_Port, H5_Pin, 0);
+  
+
+  // VCU is constantly on
+  HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, 1);
+
   pwm_frequency_01 = 24;
   pwm_frequency_2345 = 24;
   update_pwm();

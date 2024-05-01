@@ -70,6 +70,10 @@ void can_irq(CAN_HandleTypeDef *pcan);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+uint16_t u8_to_duty(uint8_t val) {
+  return ((uint32_t)val) * 65535 / 255;
+}
+
 // CAN Interrupt handler. Called whenever a new CAN frame is received.
 void can_irq(CAN_HandleTypeDef *pcan) {
   // Message header
@@ -87,13 +91,15 @@ void can_irq(CAN_HandleTypeDef *pcan) {
         break;
       case BCM_COMMAND_EV_ID:
         // set PWM duties for low-side drivers
-        pwm_duties[0] = read_field_u8(&BCM_COMMAND_EV_L0_AccumPump, data);
-        pwm_duties[1] = read_field_u8(&BCM_COMMAND_EV_L1_MotorPump, data);
-        pwm_duties[2] = read_field_u8(&BCM_COMMAND_EV_L2_AccumFan, data);
-        pwm_duties[3] = read_field_u8(&BCM_COMMAND_EV_L3_MotorFan, data);
-        pwm_duties[4] = read_field_u8(&BCM_COMMAND_EV_L4_BrakeLight, data);
-        pwm_duties[5] = read_field_u8(&BCM_COMMAND_EV_L5_Sound, data);
+        pwm_duties[0] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L0_AccumPump, data));
+        pwm_duties[1] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L1_MotorPump, data));
+        pwm_duties[2] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L2_AccumFan, data));
+        pwm_duties[3] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L3_MotorFan, data));
+        pwm_duties[4] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L4_BrakeLight, data));
+        pwm_duties[5] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L5_Sound, data));
 
+        update_pwm();
+        
         // set high-side drivers
         HAL_GPIO_WritePin(H0_GPIO_Port, H0_Pin, read_field_u8(&BCM_COMMAND_EV_H0_ShutdownPower, data));
         HAL_GPIO_WritePin(H1_GPIO_Port, H1_Pin, read_field_u8(&BCM_COMMAND_EV_H1_DashboardPower, data));

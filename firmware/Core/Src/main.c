@@ -86,13 +86,22 @@ void can_irq(CAN_HandleTypeDef *pcan) {
   if(msg.IDE == CAN_ID_STD) { // Standard CAN ID, we don't use extended IDs.
     switch (msg.StdId)
       {
-      case BOOTLOADER_ID:
-        __NVIC_SystemReset(); // Reset to bootloader
-        break;
+      // BCM Cannot reboot with bootloader or else everything connected to it will lose power and fail to respond
+      // case BOOTLOADER_ID:
+      //   __NVIC_SystemReset(); // Reset to bootloader
+      //   break;
       case BCM_COMMAND_EV_ID:
         // set PWM duties for low-side drivers
-        pwm_duties[0] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L0_AccumPump, data));
-        pwm_duties[1] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L1_MotorPump, data));
+        // pumps are on/off only
+        uint8_t accum_pump_duty = read_field_u8(&BCM_COMMAND_EV_L0_AccumPump, data);
+        if(accum_pump_duty > 0) accum_pump_duty = 255;
+      
+        uint8_t motor_pump_duty = read_field_u8(&BCM_COMMAND_EV_L1_MotorPump, data);
+        if(motor_pump_duty > 0) motor_pump_duty = 255;
+
+        pwm_duties[0] = u8_to_duty(accum_pump_duty);
+        pwm_duties[1] = u8_to_duty(motor_pump_duty);
+
         pwm_duties[2] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L2_AccumFan, data));
         pwm_duties[3] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L3_MotorFan, data));
         pwm_duties[4] = u8_to_duty(read_field_u8(&BCM_COMMAND_EV_L4_BrakeLight, data));
@@ -203,6 +212,9 @@ int main(void)
 
   // VCU is constantly on
   HAL_GPIO_WritePin(H4_GPIO_Port, H4_Pin, 1);
+
+  // why not turn on the inverter too?
+  HAL_GPIO_WritePin(H5_GPIO_Port, H5_Pin, 1);
 
   pwm_frequency_01 = 24;
   pwm_frequency_2345 = 24;
